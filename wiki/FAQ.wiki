@@ -1,0 +1,47 @@
+#summary Frequently Asked Questions
+#labels Featured
+
+*What is Arturo?*
+
+Arturo is a Python program that scrapes file urls from subtitles repositories, download subtitles and rename them with tv series video file names.
+
+*Why do i need it?*
+
+Uhm, maybe because you love tv series but, since your baby was born, you don't have enough time to download them all, download all subtitles, rename them etc. etc.
+
+I've scheduled Arturo once a week so it downloads and renames subtitles for me; videos are automatically downloaded by Azureus and Scanerss plugin.
+
+*How does it work?*
+
+Arturo, starting from your configuration, using http calls, goes to subtitles repository url, scrapes direct subtitles links and downloads them.
+
+Once downloaded, extract them from archive (for .zip files), then it moves them in the save directory you specified.
+
+Once subtitles are moved in the proper folders, using regular expression, it tries to rename them based on video files present in that folder.
+
+So next time you'll watch Barney Stinson on the latest episode of "how i met your mother", your preferred multimedia player (Xbmc i hope) will show it with subtitles.
+Awesome!
+
+*How should i configure Arturo?*
+
+Check [Configuration] page on this Wiki
+
+*How could i extend Arturo?*
+
+Check [Plugins] page on this Wiki
+
+*How could i help on Arturo?*
+
+If you want to improve Arturo in style, features or whatever else, you are definitely welcome.
+
+Drop me a mail at michele_dot_trimarchi_at_gmail_dot_com
+
+*Are you associated with any of that subtitles site repositories?*
+
+No, i'm not.
+
+*Is scraping a kind of lame\leech thing?*
+
+My script makes just plain vanilla http parsing\processing so it's just a sort of smart browser :), though i take no responsability if your account get banned!
+
+I always recommend to visit subtitle sites, thanks the releasers and support them with Paypal Donations.

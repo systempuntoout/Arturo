@@ -1,0 +1,8 @@
+#labels Featured
+Actions :
+ # Download .tar.gz file
+ # Uncompress it in the folder/directory you like
+ # Go in cfg directory and edit arturo.cfg as you like
+ # Start a command line interpreter
+ # Go to that folder/directory 
+ # Type arturo.py and launch it

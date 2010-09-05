@@ -1,0 +1,33 @@
+#labels Featured
+Arturo actually supports these following sites:
+  * http://www.italiasubs.net
+  * http://www.subsfactory.it
+  * http://www.tvsubtitles.net
+
+These sites are great because subtitles are divided in pages with specific tv series name and season.
+
+If you want to create a new plugin for www.foosubtitles.cz, you have to:
+ # go to Arturo plugins folder
+ # create a folder named cz
+ # create a file named foosubtitles.py (the easiest way is to copy and paste an old plugin and rename it)
+ # modify it 
+
+Plugins are just Python files that must adhere to this specification:
+
+{{{
+class Scraper(object):    
+	#This class has to be called Scraper, that's it!	
+
+    def __init__(self,opener,tvseries_config):       
+	#This constructor initialize the opener and, as it is called just one time, can be used for site authentication 
+
+    def get_subtitles_file_url_list(self,tvseries_config):
+	#This method does the dirty job!
+ 	#Starting from tv series url, using regular expression, it has to return a list of url like this:
+	#['http://www.foosubtitles.cz/download/sub_episodes1.zip','http://www.foosubtitles.cz/download/sub_episodes2.zip',..]
+}}}
+
+Remember, plugins are not forever!
+If subtitles repositories change its layout, plugin probably will miserably start to fail.
+
+Have fun!

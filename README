@@ -1,0 +1,11 @@
+Installing from .tar.gz
+
+Actions :
+
+   1. Download the .tar.gz file
+   2. Uncompress it in the folder/directory you like
+   3. start a command line interpreter
+   4. Go to that folder/directory
+   5. Go in cfg directory and edit arturo.cfg as you like
+   6. Return to main directory
+   7. Type arturo.py and launch it

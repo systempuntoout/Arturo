@@ -1,0 +1,66 @@
+#labels Featured
+_All Arturo's configuration are located in *cfg/arturo.cfg*_
+
+==PROGRAM SECTION `[arturo]`==
+
+*regexp_list:*
+regular expression pattern used for subtitles renaming.
+Pattern must match two groups: season number and episode number)
+||*Supported subtitles formats*||
+||foo`_[s01]_[e01]`||
+||foo.1x09||
+||s01e01||
+||foo.s01.e01||
+||foo.s01-e01||
+
+*video_extension_list:*
+video extension list used to search for video files on file system
+
+*subtitle_extension_list:*
+video extension list used to search for subtitles files on file system
+
+*user_agent:*
+user agent header showed to web server 
+
+*log_level:*
+logging level
+
+==TV SERIES SECTIONS `[tvseries#]`==
+
+*name:*
+tv series name
+
+*enabled:*
+Y turns the section ON, N turns the section OFF
+
+*main_tvseries_url:*
+html page url with a specific season episodes list 
+
+*latest_episodes_to_download:*number of latest episodes to download from main_tvseries_url.
+
+1 means downloading the latest episode, 2 means downloading the 2 latest episodes.
+Special keyword *`*`* tells Arturo to download all the episodes; don't overuse it.
+
+*save_directory:*
+directory where you want to save your downloaded subtitles
+
+*try_to_rename:*
+Y tells Arturo to rename downloaded subtitles based on video files found on save_directory, N tells Arturo to skip renaming.
+Save_directory MUST contain just one tv series.
+
+*username:*
+username for site that needs authentication
+
+*password:*
+password for site that needs authentication
+
+*accept_pattern:*
+regular expression for filtering url episodes
+useful for sites that mixes SD episodes with HD episodes (720p etc.)
+
+*deny_pattern:*
+regular expression for filtering url episodes
+useful for sites that mixes SD episodes with HD episodes (720p etc.)
+
+*language:*
+language for sites that have multilanguage subtitles

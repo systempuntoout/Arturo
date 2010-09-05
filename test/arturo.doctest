@@ -1,0 +1,104 @@
+#Testing _TvSeriesSettings...
+>>> from arturo import _TvSeriesSettings
+>>> from arturo import _get_supported_file_info_list
+>>> from arturo import _get_downloaded_file_type
+>>> from arturo import ZIP_FILE_TYPE 
+>>> from arturo import RAR_FILE_TYPE 
+>>> from arturo import TEXT_FILE_TYPE 
+>>> from arturo import UNKNOWN_FILE_TYPE
+>>> from arturo import EMPTY_SEASON
+>>> from arturo import EMPTY_EPISODE
+>>> from arturo import VIDEO_FILE_TYPE
+>>> from arturo import SUBTITLE_FILE_TYPE
+>>> from arturo import _ProgramSettings
+>>> from arturo import SubtitlesTool
+>>> import tempfile, shutil, os, sys
+>>> tv_series_settings =_TvSeriesSettings('test','Y','http://www.test.it')
+>>> tv_series_settings.get_plugin_package_name()
+'it.test'
+>>> tv_series_settings.is_valid()
+(False, "can't find plugin it.test")
+>>> tv_series_settings =_TvSeriesSettings('test','Y','http://www.pippopippo.cz.tk')
+>>> tv_series_settings.get_plugin_package_name()
+'tk.cz.pippopippo'
+>>> tv_series_settings.is_valid()
+(False, "can't find plugin tk.cz.pippopippo")
+>>> tv_series_settings = _TvSeriesSettings('test','Y','http://www.italiansubs.net')
+>>> tv_series_settings.is_valid()
+(True, '')
+>>> tv_series_settings.get_plugin_package_name()
+'net.italiansubs'
+
+#Testing _get_supported_file_info_list function
+>>> tmp_download_directory = tempfile.mkdtemp()
+>>> _get_supported_file_info_list(tmp_download_directory,(),('AVI'),('SUB'))
+[]
+>>> file_avi_tmp = open (os.path.join(tmp_download_directory,"file.avi"),"w")
+>>> file_avi_tmp.write('test')
+>>> file_avi_tmp.close()
+>>> file_avi_tmp = open (os.path.join(tmp_download_directory,"1x10.file.avi"),"w")
+>>> file_avi_tmp.write('test')
+>>> file_avi_tmp.close()
+>>> file_sub_tmp = open (os.path.join(tmp_download_directory,"file.sub"),"w")
+>>> file_sub_tmp.write('test')
+>>> file_sub_tmp.close()
+>>> file_sub_tmp = open (os.path.join(tmp_download_directory,"1x10.file.sub"),"w")
+>>> file_sub_tmp.write('test')
+>>> file_sub_tmp.close()
+>>> file_list = _get_supported_file_info_list(tmp_download_directory,['([0-9]+)x([0-9]+)([^\\/]*)'],('AVI'),('SUB'))
+>>> len(file_list)
+4
+>>> file_list[0].season_number 
+'1'
+>>> file_list[0].episode_number
+'10'
+>>> file_list[0].file_type
+0
+>>> file_list[1].season_number
+'1'
+>>> file_list[1].episode_number
+'10'
+>>> file_list[1].file_type
+1
+>>> file_list[2].season_number == EMPTY_SEASON
+True
+>>> file_list[2].episode_number == EMPTY_EPISODE
+True
+>>> file_list[2].file_type == VIDEO_FILE_TYPE
+True
+>>> file_list[3].season_number == EMPTY_SEASON
+True
+>>> file_list[3].episode_number == EMPTY_EPISODE
+True
+>>> file_list[3].file_type == SUBTITLE_FILE_TYPE
+True
+>>> shutil.rmtree(tmp_download_directory)
+
+#Testing _get_downloaded_file_type(file_name, content_type, subtitle_extension_list)
+>>> _get_downloaded_file_type( 'pippo.zip','application/zip',()) == ZIP_FILE_TYPE
+True
+>>> _get_downloaded_file_type( 'temp','application/zip',()) == ZIP_FILE_TYPE
+True
+>>> _get_downloaded_file_type( 'temp','application/x-zip-compressed',()) == ZIP_FILE_TYPE
+True
+>>> _get_downloaded_file_type( 'pippo.rar','application/x-rar-compressed',()) == RAR_FILE_TYPE
+True
+>>> _get_downloaded_file_type( 'temp','application/x-rar-compressed',()) == RAR_FILE_TYPE
+True
+>>> _get_downloaded_file_type( 'pippo.srt','text/plain',('SRT')) == TEXT_FILE_TYPE
+True
+>>> _get_downloaded_file_type( 'temp','text/plain',('SRT')) == TEXT_FILE_TYPE
+True
+>>> _get_downloaded_file_type( 'temp','pippo',()) == UNKNOWN_FILE_TYPE
+True
+
+#Testing SubtitlesTool
+>>> program_settings = _ProgramSettings(['([0-9]+)x([0-9]+)([^\\/]*)'],('SRT'),('AVI'),"ArturoTest","")
+>>> tv_series_settings =_TvSeriesSettings('test','Y','http://www.italiansubs.net/Sottotitoli/Dexter/Stagione-3/',latest_episodes_to_download='1', username ='test',password ='test',deny_pattern='Completa')
+>>> subtitles_tool = SubtitlesTool(program_settings)
+>>> scraped_url=subtitles_tool.scrape_urls(tv_series_settings)
+>>> len(scraped_url)
+13
+>>> len(subtitles_tool.download_subtitles(tv_series_settings,scraped_url))
+1
+
