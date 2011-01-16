@@ -1,4 +1,4 @@
 *.pyc
-key.py
 web
+log
 .DS_Store
